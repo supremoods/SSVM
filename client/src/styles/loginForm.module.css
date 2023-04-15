@@ -1,7 +1,0 @@
-.txtBox{
-   @apply bg-transparent  border-2 border-gray-500 focus:outline-none focus:border-[#d64040] focus:text-[#d64040]  p-2;
-}
-
-.txtBox:focus::placeholder{
-   @apply text-[#d64040];
-}
