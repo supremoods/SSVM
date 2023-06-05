@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   font-family: 'League Spartan', sans-serif;
+   scroll-behavior: smooth;
+   -webkit-user-select: none;
+   /* Safari */
+   -ms-user-select: none;
+   /* IE 10 and IE 11 */
+   user-select: none;
+   /* Standard syntax */
+}
+
+.product-table th,
+.product-table td{
+   @apply text-left;
+}
+
+.view-dispense{
+   @apply w-0 overflow-hidden transition-all duration-500 ease-in-out;
+}
+
+.view-dispense.active{
+   @apply w-full;
+}
+
+.nav-item:hover{
+   @apply text-base-red;
+}
+
+.nav-item.active{
+   @apply bg-base-red text-base-white font-bold;
+}
+
+table{
+   @apply w-full;
+}
+
+
+th{
+   @apply text-base-red text-left;
+}

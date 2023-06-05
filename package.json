@@ -1,0 +1,33 @@
+{
+  "name": "ssvm",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
+    "boxicons": "^2.1.4",
+    "core-js": "^3.25.3",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "material-design-icons-iconfont": "^6.7.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.3.3",
+    "nuxt": "^2.15.8",
+    "nuxt-tailvue": "^1.0.95",
+    "vue": "^2.7.10",
+    "vue-good-table": "^2.21.11",
+    "vue-materialize-datatable": "^1.0.4",
+    "vue-server-renderer": "^2.7.10",
+    "vue-template-compiler": "^2.7.10"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.23",
+    "tailwindcss": "^3.3.2"
+  }
+}
