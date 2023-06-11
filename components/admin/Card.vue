@@ -3,7 +3,7 @@
       <div class="flex header-title justify-between">
         <h1 class="text-2xl text-base-red/80 font-bold">{{ product.name }}</h1>
       </div>
-      <div class="image-container h-44">
+      <div class="image-container h-44 w-44">
         <img class="w-full h-full object-cover" :src="require(`~/assets/image/${product.image}`)" alt="">
       </div>
       <div class="flex flex-col gap-4">

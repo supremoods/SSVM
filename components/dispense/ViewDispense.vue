@@ -1,6 +1,6 @@
 <template>
    <div class="view-dispense absolute bg-black/50 top-0 right-0 h-full flex justify-end" :class="{'active': isView}">
-      <div class="wrapper bg-base-white w-2/5 flex flex-col">
+      <div class="wrapper bg-base-white w-5/6 flex flex-col">
          <div class="product-table flex-grow">
             <table class="table-fixed w-full border border-separate border-spacing-7">
                <thead >
@@ -136,8 +136,20 @@ export default ({
                   }
             })
             if(product.name === 'Ballpen'){
+               for (let i = 0; i < product.quantity; i++){
+                  const delay = 1000; 
+                  setTimeout(() => {
+                     this.$axios.get('http://192.168.0.113/pen/dispense');
+                  }, i * delay);
+               }
                this.$store.commit('stocks/setQuantity', {index: 0, quantity: this.getQuantity(product.name, product.quantity)})
             }else{
+               for (let i = 0; i < product.quantity; i++){
+                  const delay = 1000; 
+                  setTimeout(() => {
+                     this.$axios.get('http://192.168.0.113/marker/dispense');
+                  }, i * delay);
+               }
                this.$store.commit('stocks/setQuantity', {index: 1, quantity: this.getQuantity(product.name, product.quantity)})
             }
          })
@@ -150,6 +162,7 @@ export default ({
                classTimeout: 'bg-base-red'
             })
          }
+         // add axios here
 
          this.$emit('cancel', false)
          this.$toast.show({

@@ -4,7 +4,13 @@
         <div class="header-title flex">
             <h1 class="text-base-red font-bold text-lg">Sales Dashboard</h1>
         </div>
-        <div class="flex justify-end">
+        <div class="flex justify-between">
+            <!-- add switch toggle for filter by month only -->
+            <label class="switch">
+                <input type="checkbox" v-model="isFilterByMonth" @change="handleFilterByMonthChange">
+                <span class="slider">Filter by month only </span>
+            </label>
+            
             <!-- add dropdown filter-->
             <div class="dropdown w-32 flex flex-col gap-1 relative">
                 <button class="dropbtn bg-base-white w-full text-base flex justify-between items-center px-3 py-2 rounded-lg" @click="isDropdownProduct = !isDropdownProduct">{{ selectedProduct }} <i class='bx bx-chevron-down'></i></button>
@@ -28,7 +34,8 @@
                 </div>  
                 <div class="flex text-base-red/5"></div>
             </div>
-            <div class="dropdown w-52 flex flex-col gap-1 relative">
+
+            <div v-show="!isFilterByMonth" class="dropdown w-52 flex flex-col gap-1 relative">
                 <button class="dropbtn bg-base-white flex-col text-base flex  px-3 py-2 rounded-lg" @click="isDropdownDays = !isDropdownDays">
                     <div class="flex">
                         <h1 class="text-base-black/70">Day</h1>
@@ -82,6 +89,7 @@
 
     export default {
         data: () => ({
+            isFilterByMonth: false,
             products: ['All', 'Ballpen', 'Marker'],
             isDropdownProduct: false,
             selectedProduct: '',
@@ -139,10 +147,11 @@
               
             ],
         }),
-        components: {
-            // DataTable
-        },
         methods: {
+            handleFilterByMonthChange(){
+                this.selectedDays = '' 
+                    this.filter()
+            },
             filterByProduct(value){
                 this.selectedProduct = value
                 this.isDropdownProduct = !this.isDropdownProduct
@@ -151,7 +160,12 @@
             filterByMonth(value){
                 this.selectedMonth = value
                 this.isDropdownMonth = !this.isDropdownMonth
-                this.filter()
+                if (this.isFilterByMonth) {
+                    this.selectedDays = '' 
+                    this.filter()
+                }else{
+                    this.filter()
+                }
             },
             filterByDays(value){
                 console.log(value)
@@ -250,20 +264,15 @@
                 const date = new Date();
                 const day = date.toLocaleString('default', { day: 'numeric' });
                 return day
-            }
-        },
-        watch: {
+            },
 
         },
         mounted() {
             this.selectedProduct = this.products[0]
             this.selectedMonth = this.getCurrentMonth
             this.selectedDays = this.getCurrentDay
-            this.getSales().then((res) => {
-                this.rows = res
-            })
 
-            console.log(this.rows)
+            this.filter()
         }
     }
 </script>

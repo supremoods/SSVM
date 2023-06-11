@@ -4,16 +4,20 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
+    "dev:host" : "nuxt --hostname '0.0.0.0' --port 3000",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
+    "bcrypt": "^5.1.0",
     "boxicons": "^2.1.4",
     "core-js": "^3.25.3",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "express": "^4.18.2",
+    "express-session": "^1.17.3",
     "material-design-icons-iconfont": "^6.7.0",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.3.3",
@@ -26,6 +30,7 @@
     "vue-template-compiler": "^2.7.10"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.23",
     "tailwindcss": "^3.3.2"

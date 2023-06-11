@@ -27,7 +27,6 @@ const insertSales = (sale) => {
     });
 }
 
-
 const getSales = () => {
     return new Promise((resolve, reject) => {
         db.query(`SELECT * FROM sales `, (err, result) => {

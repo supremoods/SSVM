@@ -25,7 +25,24 @@ export default {
   methods: {
     showViewDispense(show) {
       this.isViewDisp = show
+    },
+    checkSession(){
+      this.$axios.get('/checkSession')
+        .then(response => {
+          const isLoggedIn = response.data;
+          if (!isLoggedIn) {
+            // User is logged in
+            window.location.href = '/login';
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   },
+  beforeMount() {
+    // call api "/checkSession"  
+    this.checkSession();
+  }
 }
 </script>

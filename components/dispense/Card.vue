@@ -4,7 +4,7 @@
          <h1 class="text-2xl text-base-red/80 font-bold">{{ product.name }} ({{ getQuantity }})</h1>
          <h1 class="text-3xl text-base-red font-bold">₱ {{ product.price }}</h1>
       </div>
-      <div class="image-container h-80 w-80">
+      <div class="image-container h-64 w-64">
          <img class="w-full h-full object-cover" :src="require(`~/assets/image/${product.image}`)" alt="">
       </div>
       <div class="actions-btn flex justify-between items-center gap-2">

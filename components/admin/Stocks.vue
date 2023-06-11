@@ -25,9 +25,6 @@
     import { mapState } from 'vuex';
 
     export default {
-        data: () => ({
-
-        }),
         methods: {
             updateProductPrice(product) {
                 if(product.name == 'Ballpen'){
@@ -80,12 +77,6 @@
                 products: state => state.products,
                 stocks: state => state.stocks.stocks
             }),
-
-        },
-        watch: {
-
-        },
-        mounted() {
 
         }
     }
