@@ -1,6 +1,6 @@
 const db = require('../db/conn').db;
-const paymongo = require('paymongo-node')('sk_test_SmSC68bPGzri73cRLEDVZiTA');
-// const paymongo = require('paymongo-node')('sk_live_wWTTrMYRfk2VrzwbudR856R5');
+const paymongo = require('paymongo-node')('');
+// const paymongo = require('paymongo-node')('');
 const { promisify } = require('util');
 
 const paymentCheckout = (product) => {
