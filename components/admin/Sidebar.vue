@@ -12,9 +12,6 @@
                 <div class="nav-item text-base py-5 px-10"  @click="stocks()" :class="{'active' : isStocks}">
                     <h1>Stocks</h1>
                 </div>
-                <div class="nav-item text-base py-5 px-10"  @click="accountSettings()" :class="{'active' : isAccountSettings}">
-                    <h1>Account Settings</h1>
-                </div>
                 <div class="flex-grow">
                 </div>
                 <div class="nav-item text-base p-10"  @click="logout">

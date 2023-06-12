@@ -36,7 +36,6 @@ const insertAccount = (pass) => {
 
 
 const fetchPassword = () => {
-    console.log('shitties')
     return new Promise((resolve, reject) => {
       db.query(`SELECT password FROM admin WHERE id = 1`, (err, results) => {
         if (err) {

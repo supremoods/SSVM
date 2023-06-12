@@ -118,59 +118,109 @@ export default ({
          return product.quantity - qty
       },
       insertSales(){
-         // this.$store.dispatch('insertSales',)
-         // this.$emit('cancel', false)
-         this.res = false
+
          this.products.forEach(product => {
-           this.res = this.$store.dispatch('insertSales', {
-                  sales: {
-                     description: product.name, 
-                     quantity: product.quantity, 
-                     price: product.price,
-                     date: this.getDateTime,
-                     reference : '0DHJ2229120001112'
-                  },
-                  stock: {
-                     name: product.name,
-                     quantity: this.getQuantity(product.name, product.quantity)
-                  }
-            })
-            if(product.name === 'Ballpen'){
-               for (let i = 0; i < product.quantity; i++){
-                  const delay = 1000; 
-                  setTimeout(() => {
-                     this.$axios.get('http://192.168.0.113/pen/dispense');
-                  }, i * delay);
-               }
-               this.$store.commit('stocks/setQuantity', {index: 0, quantity: this.getQuantity(product.name, product.quantity)})
-            }else{
-               for (let i = 0; i < product.quantity; i++){
-                  const delay = 1000; 
-                  setTimeout(() => {
-                     this.$axios.get('http://192.168.0.113/marker/dispense');
-                  }, i * delay);
-               }
-               this.$store.commit('stocks/setQuantity', {index: 1, quantity: this.getQuantity(product.name, product.quantity)})
+            const { name, quantity, price } = product;
+            const date = this.getDateTime;
+            const reference = Math.random().toString(36).substr(2, 9);
+
+            if (name === 'Ballpen') {
+               this.ballpenCount = quantity;
+               this.ballpenPrice = price;
+               this.ballpenName = name;
+               this.ballpenDate = date;
+               this.ballpenReference = reference;
+            } else {
+               this.markerCount = quantity;
+               this.markerPrice = price;
+               this.markerName = name;
+               this.markerDate = date;
+               this.markerReference = reference;
+            }
+         });
+
+         console.log(this.ballpenCount, this.ballpenPrice, this.ballpenName, this.ballpenDate, this.ballpenReference);
+         console.log(this.markerCount, this.markerPrice, this.markerName, this.markerDate, this.markerReference);
+
+         const payload = this.$axios.post('/paymentCheckout', {
+            amount: this.total,
+            ballpen: {
+               name: this.ballpenName,
+               quantity: this.ballpenCount,
+               price: this.ballpenPrice,
+               date: this.ballpenDate,
+               reference: this.ballpenReference
+            },
+            marker: {
+               name: this.markerName,
+               quantity: this.markerCount,
+               price: this.markerPrice,
+               date: this.markerDate,
+               reference: this.markerReference
             }
          })
 
-         if(!this.res){
-            return this.$toast.show({
-               type: 'danger',
-               title: 'alert',
-               message: `Something went wrong`,
-               classTimeout: 'bg-base-red'
-            })
-         }
-         // add axios here
+         payload.then((res) => {
+            console.log(res)
+            if(res.status == 200){
+               console.log('sheeshh')
+               const checkout_url = res.data
 
-         this.$emit('cancel', false)
-         this.$toast.show({
-            type: 'success',
-            title: 'Success',
-            message: 'Dispense successfully',
-            classTimeout: 'bg-base-green'
+               // route to the checkout url
+               window.location.href = checkout_url
+            }
          })
+         // this.res = false
+         // this.products.forEach(product => {
+         //   this.res = this.$store.dispatch('insertSales', {
+         //          sales: {
+         //             description: product.name, 
+         //             quantity: product.quantity, 
+         //             price: product.price,
+         //             date: this.getDateTime,
+         //             reference : '0DHJ2229120001112'
+         //          },
+         //          stock: {
+         //             name: product.name,
+         //             quantity: this.getQuantity(product.name, product.quantity)
+         //          }
+         //    })
+         //    if(product.name === 'Ballpen'){
+         //       for (let i = 0; i < product.quantity; i++){
+         //          const delay = 1000; 
+         //          setTimeout(() => {
+         //             this.$axios.get('http://192.168.4.4/pen/dispense');
+         //          }, i * delay);
+         //       }
+         //       this.$store.commit('stocks/setQuantity', {index: 0, quantity: this.getQuantity(product.name, product.quantity)})
+         //    }else{
+         //       for (let i = 0; i < product.quantity; i++){
+         //          const delay = 1000; 
+         //          setTimeout(() => {
+         //             this.$axios.get('http://192.168.4.4/marker/dispense');
+         //          }, i * delay);
+         //       }
+         //       this.$store.commit('stocks/setQuantity', {index: 1, quantity: this.getQuantity(product.name, product.quantity)})
+         //    }
+         // })
+
+         // if(!this.res){
+         //    return this.$toast.show({
+         //       type: 'danger',
+         //       title: 'alert',
+         //       message: `Something went wrong`,
+         //       classTimeout: 'bg-base-red'
+         //    })
+         // }
+         // // add axios here
+
+         // this.$emit('cancel', false)
+         // this.$toast.show({
+         //    type: 'success',
+         //    title: 'Success',
+         //    message: 'Dispense successfully',
+         //    classTimeout: 'bg-base-green'
+         // })
       }
    },
    watch:{
