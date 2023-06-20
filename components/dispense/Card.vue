@@ -21,7 +21,7 @@
    </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex';
 export default {
    props: {
       product: {
@@ -58,7 +58,21 @@ export default {
       },
       decrement(name) {
          this.$store.commit('decrement', name)
-      }
+      },
+      ...mapActions(['nuxtServerInit']),
+   },
+   mounted() {
+      setInterval(() => {
+         this.nuxtServerInit()
+            .then(() => {
+               // Action completed successfully
+
+            })
+            .catch(error => {
+               console.error(error);
+               // Handle any errors that occurred during the action
+            });
+      }, 1000);
    }
 
 }

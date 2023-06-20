@@ -81,6 +81,10 @@
                 </vue-good-table>
             </div>
         </div>
+           <!-- Add the print button -->
+        <div class="flex justify-center mt-4">
+            <button class="bg-base-red text-base-white px-4 py-2 rounded-lg" @click="printTable">Print</button>
+        </div>
 
     </div>    
 </template>
@@ -227,6 +231,65 @@
                 filteredSales.then(res => {
                     this.rows = res;
                 });
+            },
+            printTable() {
+            // Create a new window to print the table
+            const printWindow = window.open('', '_blank');
+            
+            // Build the HTML content to be printed
+            const tableHTML = `
+                <html>
+                <head>
+                    <style>
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+                    th, td {
+                        padding: 8px;
+                        text-align: left;
+                        border-bottom: 1px solid #ddd;
+                    }
+                    th {
+                        background-color: #f2f2f2;
+                    }
+                    </style>
+                </head>
+                <body>
+                    <h1>Sales Report</h1>
+                    <table>
+                    <thead>
+                        <tr>
+                        ${this.columns
+                            .map((column) => `<th>${column.label}</th>`)
+                            .join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${this.rows
+                        .map(
+                            (row) =>
+                            `<tr>${this.columns
+                                .map(
+                                (column) =>
+                                    `<td>${row[column.field]}</td>`
+                                )
+                                .join('')}</tr>`
+                        )
+                        .join('')}
+                    </tbody>
+                    </table>
+                </body>
+                </html>
+            `;
+            
+            // Write the HTML content to the print window
+            printWindow.document.open();
+            printWindow.document.write(tableHTML);
+            printWindow.document.close();
+            
+            // Call the print function
+            printWindow.print();
             }
         },
         computed: {

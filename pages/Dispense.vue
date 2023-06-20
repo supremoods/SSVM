@@ -94,63 +94,77 @@
       this.markerPrice = parseInt(params.markerPrice) || 0;
       this.markerReference = params.markerReference;
       this.markerDate = params.markerDate;
-  
+
+      
       if (this.penCount > 0) {
+        let penDispensedCount = 0;
 
         for (let i = 0; i < this.penCount; i++) {
-              const delay = 1000;
-              setTimeout(() => {
-                this.$axios.get("http://192.168.106.1/pen/dispense");
-              }, i * delay);
-            }
-        this.$store
-          .dispatch("insertSales", {
-            sales: {
-              description: "Ballpen",
-              quantity: this.penCount,
-              price: this.penPrice,
-              date: this.ballPenDate,
-              reference: this.ballPenReference,
-            },
-            stock: {
-              name: "Ballpen",
-              quantity: this.getQuantity("Ballpen", this.penCount),
-            },
-          })
-          .then(() => {
-            this.loading = false;
-            this.dispensed = true;
-          });
-      }
-  
-      if (this.markerCount > 0) {
-        for (let i = 0; i < this.markerCount; i++) {
-            const delay = 1000;
-            setTimeout(() => {
-            this.$axios.get("http://192.168.106.1/marker/dispense");
-            }, i * delay);
+          const delay = 1000;
+          setTimeout(() => {
+            this.$axios.get("http://192.168.106.1/pen/dispense").then(() => {
+              penDispensedCount++;
+
+              if (penDispensedCount === this.penCount) {
+                this.$store
+                  .dispatch("insertSales", {
+                    sales: {
+                      description: "Ballpen",
+                      quantity: this.penCount,
+                      price: this.penPrice,
+                      date: this.ballPenDate,
+                      reference: this.ballPenReference,
+                    },
+                    stock: {
+                      name: "Ballpen",
+                      quantity: this.getQuantity("Ballpen", this.penCount),
+                    },
+                  })
+                  .then(() => {
+                    this.loading = false;
+                    this.dispensed = true;
+                  });
+              }
+            });
+          }, i * delay);
         }
-        this.$store
-          .dispatch("insertSales", {
-            sales: {
-              description: "Marker",
-              quantity: this.markerCount,
-              price: this.markerPrice,
-              date: this.markerDate,
-              reference: this.markerReference,
-            },
-            stock: {
-              name: "Marker",
-              quantity: this.getQuantity("Marker", this.markerCount),
-            },
-          })
-          .then(() => {
+      }
+
+      if (this.markerCount > 0) {
+        let markerDispensedCount = 0;
+
+        for (let i = 0; i < this.markerCount; i++) {
+          const delay = 1000;
+          setTimeout(() => {
+            this.$axios.get("http://192.168.106.1/marker/dispense").then(() => {
+              markerDispensedCount++;
+
+              if (markerDispensedCount === this.markerCount) {
+                this.$store
+                  .dispatch("insertSales", {
+                    sales: {
+                      description: "Marker",
+                      quantity: this.markerCount,
+                      price: this.markerPrice,
+                      date: this.markerDate,
+                      reference: this.markerReference,
+                    },
+                    stock: {
+                      name: "Marker",
+                      quantity: this.getQuantity("Marker", this.markerCount),
+                    },
+                  })
+                  .then(() => {
+                    this.loading = false;
+                    this.dispensed = true;
+                  });
+              }
+            });
+          }, i * delay);
+        }
+      }
 
   
-            this.loading = false;
-            this.dispensed = true;
-          });
-      }
     },
   };
   </script>

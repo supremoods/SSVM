@@ -75,9 +75,11 @@ export default ({
          products: state => state.products.filter(product => product.quantity > 0),
          stocks: state => state.stocks.stocks
       }),
+      
       ...mapGetters({
          total: 'total'
       }),
+
       getDateTime(){
          const date = new Date()
          const month = date.getMonth() + 1
@@ -170,57 +172,7 @@ export default ({
                window.location.href = checkout_url
             }
          })
-         // this.res = false
-         // this.products.forEach(product => {
-         //   this.res = this.$store.dispatch('insertSales', {
-         //          sales: {
-         //             description: product.name, 
-         //             quantity: product.quantity, 
-         //             price: product.price,
-         //             date: this.getDateTime,
-         //             reference : '0DHJ2229120001112'
-         //          },
-         //          stock: {
-         //             name: product.name,
-         //             quantity: this.getQuantity(product.name, product.quantity)
-         //          }
-         //    })
-         //    if(product.name === 'Ballpen'){
-         //       for (let i = 0; i < product.quantity; i++){
-         //          const delay = 1000; 
-         //          setTimeout(() => {
-         //             this.$axios.get('http://192.168.4.4/pen/dispense');
-         //          }, i * delay);
-         //       }
-         //       this.$store.commit('stocks/setQuantity', {index: 0, quantity: this.getQuantity(product.name, product.quantity)})
-         //    }else{
-         //       for (let i = 0; i < product.quantity; i++){
-         //          const delay = 1000; 
-         //          setTimeout(() => {
-         //             this.$axios.get('http://192.168.4.4/marker/dispense');
-         //          }, i * delay);
-         //       }
-         //       this.$store.commit('stocks/setQuantity', {index: 1, quantity: this.getQuantity(product.name, product.quantity)})
-         //    }
-         // })
-
-         // if(!this.res){
-         //    return this.$toast.show({
-         //       type: 'danger',
-         //       title: 'alert',
-         //       message: `Something went wrong`,
-         //       classTimeout: 'bg-base-red'
-         //    })
-         // }
-         // // add axios here
-
-         // this.$emit('cancel', false)
-         // this.$toast.show({
-         //    type: 'success',
-         //    title: 'Success',
-         //    message: 'Dispense successfully',
-         //    classTimeout: 'bg-base-green'
-         // })
+    
       }
    },
    watch:{
